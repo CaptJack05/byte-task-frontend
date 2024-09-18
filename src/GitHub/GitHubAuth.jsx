@@ -7,6 +7,7 @@ function GitHubLoginComponent() {
   const [isFollowingGitHub, setIsFollowingGitHub] = useState(null);
   const [accessToken, setAccessToken] = useState(null); // To store the access token
   const [errorMessage, setErrorMessage] = useState(null); // To handle errors
+  const [loading, setLoading] = useState(false); // To handle loading state
 
   const handleGitHubLogin = () => {
     // Opens the GitHub OAuth login URL
@@ -19,6 +20,7 @@ function GitHubLoginComponent() {
 
     if (code && !accessToken) { // If code exists and token is not set
       try {
+        setLoading(true); // Start loading
         // Exchange the code for an access token
         const response = await axios.get(`https://byte-task-backend-1.onrender.com/github/callback?code=${code}`);
         const retrievedAccessToken = response.data;
@@ -27,18 +29,23 @@ function GitHubLoginComponent() {
       } catch (error) {
         setErrorMessage('Error during token retrieval from GitHub');
         console.error('Error during GitHub OAuth flow:', error);
+      } finally {
+        setLoading(false); // Stop loading
       }
     }
   };
 
   const checkGitHubFollowStatus = async (token) => {
     try {
+      setLoading(true); // Start loading
       // Call the follow-check API only after access token is received
       const followResponse = await axios.get(`https://byte-task-backend-1.onrender.com/github/check-follow?accessToken=${token}`);
       setIsFollowingGitHub(followResponse.data); // Update the state with follow status
     } catch (error) {
       setErrorMessage('Error checking GitHub follow status');
       console.error('Error checking follow status:', error);
+    } finally {
+      setLoading(false); // Stop loading
     }
   };
 
@@ -61,8 +68,13 @@ function GitHubLoginComponent() {
   
   return (
     <div>
-     
-      <button className='bg-gray-100 px-2 py-1 rounded-md border-2 border-gray-400 hover:bg-blue-100  hover:border-blue-500 font-semibold' onClick={handleGitHubLogin}>Login with GitHub</button>
+      <button
+        className='bg-gray-100 px-2 py-1 rounded-md border-2 border-gray-400 hover:bg-blue-100 hover:border-blue-500 font-semibold'
+        onClick={handleGitHubLogin}
+        disabled={loading} // Disable button when loading
+      >
+        {loading ? 'Loading...' : 'Login with GitHub'}
+      </button>
 
       {isFollowingGitHub !== null && (
         <h5>
@@ -70,7 +82,7 @@ function GitHubLoginComponent() {
         </h5>
       )}
 
-      {/* {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>} */}
+      {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
     </div>
   );
 }
