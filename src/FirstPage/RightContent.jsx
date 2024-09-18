@@ -45,7 +45,7 @@ function RightContent({ youtube, github }) {
                     </div>
                 </div>
 
-                {youtube && github && (
+                {(youtube || github) && (
                     <a
                         href="https://github.com/bytemait"
                         target="_blank"
@@ -55,6 +55,7 @@ function RightContent({ youtube, github }) {
                         https://byte-site.vercel.app/
                     </a>
                 )}
+
             </div>
         </div>
     );
