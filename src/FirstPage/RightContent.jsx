@@ -29,7 +29,7 @@ function RightContent({ youtube, github }) {
             <div>
                 <div style={{ display: "flex", justifyContent: "center", alignContent: "center" }} className='m-3 ml-12 w-fit border-2 border-black'>
                     <div>
-                        {youtube && github ? (
+                        {youtube || github ? (
                             <img
                                 src="/QR.svg"
                                 alt="QR Code"
