@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 // YouTube credentials
-const CLIENT_ID = '23491837551-4ichnhhvpepmd7eftpbf1fcmo84rlvni.apps.googleusercontent.com'; // Replace with your Google client ID
-const API_KEY = 'AIzaSyBNFR3EsIw1lEEVLH530yCkId2GE_QJOB4'; // Replace with your YouTube API Key
-const CHANNEL_ID_TO_CHECK = 'UCgIzTPYitha6idOdrr7M8sQ'; // Replace with the channel ID you want to check for
+const CLIENT_ID = '237575967575-1pbbktgtt9nl6hi33v26hl162grq9a1m.apps.googleusercontent.com'; // Replace with your Google client ID
+const API_KEY = 'AIzaSyDOY6RaRUtUZh2zjx5OwKFVszyPvUqc7xM'; // Replace with your YouTube API Key
+const CHANNEL_ID_TO_CHECK = 'UCgIzTPYitha6idOdrr7M8sQ'; // channel ID of the Byte Channel
 
 const YouTubeSubscriptionCheck = () => {
   const [accessToken, setAccessToken] = useState(null);
